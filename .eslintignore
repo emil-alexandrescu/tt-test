@@ -1,0 +1,4 @@
+node_modules/**
+gulpfile.babel.js/**
+*.spec.js
+migrations/**

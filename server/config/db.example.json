@@ -1,0 +1,9 @@
+{
+  "development": {
+    "username": "root",
+    "password": "root",
+    "database": "toptal-test",
+    "host": "localhost",
+    "dialect": "mysql"
+  }
+}

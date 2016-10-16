@@ -14,7 +14,7 @@ module.exports = {
         amount: Sequelize.FLOAT,
         description: Sequelize.STRING(255),
         comment: Sequelize.STRING(255),
-        date: Sequelize.DATE
+        dateTime: Sequelize.DATE
       }
     );
   },

@@ -13,7 +13,7 @@ export default class TopBar extends Component {
     return (
       <AppBar>
         <IconButton icon="menu" inverse onClick={LayoutStore.toggleDrawerActive} />
-        <span>{CurrentUserStore.isLoggedIn ? `${CurrentUserStore.email} (${CurrentUserStore.role})` : null}</span>
+        <span>{CurrentUserStore.isLoggedIn ? `${CurrentUserStore.name} (${CurrentUserStore.role})` : null}</span>
         {
           CurrentUserStore.isLoggedIn ?
           (

@@ -3,8 +3,8 @@ export default {
   db: {
     host: 'localhost',
     name: 'toptal-test',
-    password: 'root',
-    username: 'root'
+    password: 'test',
+    username: 'test'
   },
   jwt: {
     secret: 'TOPTAL-EXPENSE-TEST'

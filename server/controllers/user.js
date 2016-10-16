@@ -118,6 +118,6 @@ export default class UserController extends BaseAPIController {
 
       req.profile = user; // eslint-disable-line
       return next();
-    }).catch(err => next(err));
+    }).catch(err => res.status(400).send(errorHandler(err)));
   }
 }

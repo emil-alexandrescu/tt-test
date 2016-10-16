@@ -22,20 +22,24 @@ export default class MainLayout extends Component {
             onOverlayClick={LayoutStore.toggleDrawerActive}
           >
             <Navigation type="vertical">
-              <LinkContainer to="/expenses">
-                <Link label="List Expenses" />
-              </LinkContainer>
-              <LinkContainer to="/expenses/create">
-                <Link label="Add Expense" />
-              </LinkContainer>
-              <LinkContainer to="/expenses-report">
-                <Link label="Weekly Report" />
-              </LinkContainer>
+              {
+                (CurrentUserStore.role !== 'MANAGER') ?
+                [(<LinkContainer to="/expenses">
+                  <Link label="List Expenses" />
+                </LinkContainer>),
+                (<LinkContainer to="/expenses/create/">
+                  <Link label="Add Expense" />
+                </LinkContainer>),
+                (<LinkContainer to="/expenses-report">
+                  <Link label="Weekly Report" />
+                </LinkContainer>)] :
+                null
+              }
               {
                 (CurrentUserStore.role !== 'USER') ?
                 [(<LinkContainer to="/users">
                   <Link label="List Users" />
-                </LinkContainer>), (<LinkContainer to="/users/create">
+                </LinkContainer>), (<LinkContainer to="/users/create/">
                   <Link label="Add Users" />
                 </LinkContainer>)] :
                 null

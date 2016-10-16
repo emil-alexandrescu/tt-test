@@ -128,6 +128,6 @@ export default class ExpenseController extends BaseAPIController {
 
       req.expense = expense; // eslint-disable-line
       return next();
-    }).catch(err => next(err));
+    }).catch(err => res.status(400).send(errorHandler(err)));
   }
 }

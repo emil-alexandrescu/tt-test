@@ -28,7 +28,7 @@ export default class ExpensesList extends Component {
   }
 
   onCreate() {
-    history.replace('/expenses/create');
+    history.replace('/expenses/create/');
   }
 
   onEdit(id) {

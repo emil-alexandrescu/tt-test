@@ -45,7 +45,7 @@ export default class App extends Component {
           <Route path="users/create/" component={UserCreatePage} />
           <Route path="users/:userId" component={UserEditPage} />
           <Route path="expenses" component={ExpensesPage} />
-          <Route path="expenses/create" component={ExpenseCreatePage} />
+          <Route path="expenses/create/" component={ExpenseCreatePage} />
           <Route path="expenses-report" component={WeeklyReportPage} />
           <Route path="expenses/:expenseId" component={ExpenseEditPage} />
         </Route>

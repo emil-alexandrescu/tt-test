@@ -73,7 +73,19 @@ export default class UserController {
    */
   delete(req, res) {
     const user = req.profile;
-    user.destroy().then(() => {
+
+    if (req.profile.id === req.user.id) {
+      res.status(400).send({
+        message: 'You can not delete yourself'
+      });
+      return;
+    }
+
+    db.Expense.destroy({
+      where: { userId: req.profile.id }
+    }).then(() => {
+      user.destroy();
+    }).then(() => {
       res.send({ status: 'SUCCESS' });
     }).catch(err => res.status(400).send(errorHandler(err)));
   }
@@ -92,7 +104,13 @@ export default class UserController {
         return next(new Error(`Failed to load user ${id}`));
       }
 
-      if (!req.user.is('MANAGER') && !req.user.is('ADMIN') && req.user.id !== user.id) {
+      if (req.user.role !== 'MANAGER' && req.user.role !== 'ADMIN' && req.user.id !== user.id) {
+        return res.status(403).send({
+          message: 'You are not authorized'
+        });
+      }
+
+      if (req.user.role === 'MANAGER' && user.role === 'ADMIN') {
         return res.status(403).send({
           message: 'You are not authorized'
         });

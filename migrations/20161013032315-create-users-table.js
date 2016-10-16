@@ -13,7 +13,8 @@ module.exports = {
         email: Sequelize.STRING(255),
         name: Sequelize.STRING(255),
         password: Sequelize.STRING(255),
-        role: Sequelize.STRING(10)
+        role: Sequelize.STRING(10),
+        dateTime: Sequelize.DATE,
       }
     );
   },

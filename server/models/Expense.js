@@ -8,7 +8,7 @@ export default function (sequelize, DataTypes) {
     associate: (models) => {
       Expense.belongsTo(models.User, { foreignKey: 'userId' });
     },
-    tableName: 'expense',
+    tableName: 'expenses',
     timestamps: false
   });
 

@@ -14,7 +14,7 @@ export default function (app) {
     .put(auth.requiresLogin, expense.update)
     .delete(auth.requiresLogin, expense.delete);
 
-  app.route('/expenses/report')
+  app.route('/expenses-report')
     .get(auth.requiresLogin, expense.getWeeklyReport);
 
   app.param('expenseId', expense.getByID);

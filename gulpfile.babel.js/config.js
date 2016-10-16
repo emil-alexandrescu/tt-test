@@ -8,7 +8,7 @@ export default {
   server: {
     src: `${root}server/**/*.js`,
     dist: `${root}.build`,
-    base: `${root}server`
+    base: `${root}server/`
   },
   public: {
     src: `${root}public/**/*.js`,

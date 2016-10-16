@@ -47,7 +47,7 @@ export default class AuthController {
     }
   }
 
-  hasAuthorizationn(role) {
+  hasAuthorization(role) {
     return (req, res, next) => {
       this.requiresLogin(req, res, () => {
         console.log(req.user.role);

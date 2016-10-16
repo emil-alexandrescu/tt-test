@@ -1,14 +1,14 @@
-import db from '../sequelize';
 import errorHandler from '../util/errorHandler';
+import BaseAPIController from './BaseAPIController';
 
-export default class ExpenseController {
+export default class ExpenseController extends BaseAPIController {
   /**
    * @method create
    * @param {Request} req
    * @param {Response} res
    */
-  create(req, res) {
-    const expense = db.Expense.build(req.body);
+  create = (req, res) => {
+    const expense = this._db.Expense.build(req.body);
     expense.userId = req.user.id;
     expense.save().then(() => {
       res.json(expense);
@@ -29,16 +29,16 @@ export default class ExpenseController {
    * @param {Request} req
    * @param {Response} res
    */
-  list(req, res) {
+  list = (req, res) => {
     const conditions = {};
     if (req.user.role !== 'ADMIN') {
       Object.assign(conditions, { userId: req.user.id });
     }
 
-    db.Expense.findAll({
+    this._db.Expense.findAll({
       where: conditions,
       include: [{
-        model: db.User,
+        model: this._db.User,
         attributes: ['name']
       }]
     }).then((expenses) => {
@@ -51,7 +51,7 @@ export default class ExpenseController {
    * @param {Request} req
    * @param {Response} res
    */
-  update(req, res) {
+  update = (req, res) => {
     const expense = req.expense;
     Object.assign(expense, req.body);
 
@@ -65,7 +65,7 @@ export default class ExpenseController {
    * @param {Request} req
    * @param {Response} res
    */
-  delete(req, res) {
+  delete = (req, res) => {
     const expense = req.expense;
     expense.destroy().then(() => {
       res.send({ status: 'SUCCESS' });
@@ -77,19 +77,20 @@ export default class ExpenseController {
    * @param {Request} req
    * @param {Response} res
    */
-  getWeeklyReport(req, res) {
+  getWeeklyReport = (req, res) => {
     const conditions = {};
+    const { _db } = this;
 
     if (req.user.role !== 'ADMIN') {
       Object.assign(conditions, { userId: req.user.id });
     }
 
-    db.Expense.findAll({
+    this._db.Expense.findAll({
       where: conditions,
       attributes: [
-        [db.sequelize.fn('SUM', db.sequelize.col('amount')), 'total'],
-        [db.sequelize.fn('AVG', db.sequelize.col('amount')), 'avg'],
-        [db.sequelize.fn('DATE_FORMAT', db.sequelize.col('dateTime'), '%Y, Week %U'), 'week']
+        [_db.sequelize.fn('SUM', _db.sequelize.col('amount')), 'total'],
+        [_db.sequelize.fn('AVG', _db.sequelize.col('amount')), 'avg'],
+        [_db.sequelize.fn('DATE_FORMAT', _db.sequelize.col('dateTime'), '%Y, Week %U'), 'week']
       ],
       group: ['week'],
       order: [['dateTime', 'asc']]
@@ -106,11 +107,11 @@ export default class ExpenseController {
    * @param {Function} next
    * @param {number} id
    */
-  getByID(req, res, next, id) {
-    db.Expense.findOne({
+  getByID = (req, res, next, id) => {
+    this._db.Expense.findOne({
       where: { id },
       include: [{
-        model: db.User,
+        model: this._db.User,
         attributes: ['name']
       }]
     }).then((expense) => {

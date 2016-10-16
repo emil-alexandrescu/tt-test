@@ -8,7 +8,7 @@
     "npm": ">=3"
   },
   "scripts": {
-    "test": "mocha --require test/setup.js --compilers js:babel-core/register ./test/*.spec.js"
+    "test": "mocha --require test/setup.js --compilers js:babel-core/register ./public/**/spec/*.spec.js ./server/**/spec/*.spec.js"
   },
   "author": "Emil Alexandresku",
   "license": "MIT",
@@ -37,6 +37,8 @@
     "react-router-bootstrap": "^0.23.1",
     "sass-loader": "^4.0.2",
     "sequelize": "^3.24.3",
+    "sinon": "^1.17.6",
+    "sinon-chai": "^2.8.0",
     "swig": "^1.4.2"
   },
   "devDependencies": {

@@ -1,17 +1,17 @@
-import db from '../sequelize';
 import errorHandler from '../util/errorHandler';
+import BaseAPIController from './BaseAPIController';
 
-export default class UserController {
+export default class UserController extends BaseAPIController {
   /**
    * @method create
    * @param {Request} req
    * @param {Response} res
    */
-  create(req, res) {
-    const user = db.User.build(req.body);
-    user.password = db.User.encryptPassword(user.password);
+  create = (req, res) => {
+    const user = this._db.User.build(req.body);
+    user.password = this._db.User.encryptPassword(user.password);
 
-    db.User.find({
+    this._db.User.find({
       where: { email: user.email }
     }).then((result) => {
       if (result) {
@@ -32,7 +32,7 @@ export default class UserController {
    * @param {Request} req
    * @param {Response} res
    */
-  get(req, res) {
+  get = (req, res) => {
     res.json(req.profile);
   }
 
@@ -41,8 +41,8 @@ export default class UserController {
    * @param {Request} req
    * @param {Response} res
    */
-  list(req, res) {
-    db.User.findAll().then((users) => {
+  list = (req, res) => {
+    this._db.User.findAll().then((users) => {
       res.send(users);
     }).catch(err => res.status(400).send(errorHandler(err)));
   }
@@ -52,11 +52,11 @@ export default class UserController {
    * @param {Request} req
    * @param {Response} res
    */
-  update(req, res) {
+  update = (req, res) => {
     const user = req.profile;
     let password = user.password;
     if (req.body.password && req.body.password !== '') {
-      password = db.User.encryptPassword(req.body.password);
+      password = this._db.User.encryptPassword(req.body.password);
     }
 
     Object.assign(user, req.body, { password });
@@ -71,7 +71,7 @@ export default class UserController {
    * @param {Request} req
    * @param {Response} res
    */
-  delete(req, res) {
+  delete = (req, res) => {
     const user = req.profile;
 
     if (req.profile.id === req.user.id) {
@@ -81,7 +81,7 @@ export default class UserController {
       return;
     }
 
-    db.Expense.destroy({
+    this._db.Expense.destroy({
       where: { userId: req.profile.id }
     }).then(() => {
       user.destroy();
@@ -98,8 +98,8 @@ export default class UserController {
    * @param {Function} next
    * @param {number} id
    */
-  getByID(req, res, next, id) {
-    db.User.findById(id).then((user) => {
+  getByID = (req, res, next, id) => {
+    return this._db.User.findById(id).then((user) => {
       if (!user) {
         return next(new Error(`Failed to load user ${id}`));
       }

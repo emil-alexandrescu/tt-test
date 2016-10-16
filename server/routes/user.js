@@ -6,13 +6,13 @@ export default function (app) {
   const user = new UserController();
 
   app.route('/users')
-    .get(auth.hasAuthorizationn('MANAGER'), user.list)
+    .get(auth.hasAuthorization('MANAGER'), user.list)
     .post(user.create);
 
   app.route('/users/:userId')
     .get(auth.requiresLogin, user.get)
     .put(auth.requiresLogin, user.update)
-    .delete(auth.hasAuthorizationn('MANAGER'), user.delete);
+    .delete(auth.hasAuthorization('MANAGER'), user.delete);
 
   app.param('userId', user.getByID);
 }
